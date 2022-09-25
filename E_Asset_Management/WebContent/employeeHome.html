@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="ISO-8859-1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  <!-- <script src="script/employeeHome.js"></script> -->
+  <title>Employee Home Page</title>
+
+  <!-- BOOTSTRAP 4 LIBRARIES -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="assets/CSS/style.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body style="background-color:white">
+
+
+  <nav class="user_home_nav navbar navbar-expand-sm">
+    <a class="navbar-brand" href="/E-AssetManagement/">E-Asset Management</a>
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" onclick="changeSection(1)">
+        <a class="nav-link" href="#userInfo">User Info</a>
+      </li>
+      <li class="nav-item" onclick="changeSection(2)">
+        <a class="nav-link" href="#borrowAssets">My Assets</a>
+      </li>
+      <li class="nav-item" onclick="changeSection(3)">
+        <a class="nav-link" href="#issueAssets">Issue Assets</a>
+      </li>
+      <li class="nav-item" onclick="changeSection(4)">
+        <a class="nav-link" href="#messages">Messages</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-success my-2 my-sm-0" type="button" onclick="(function(){sessionStorage.clear();window.location.replace('index.html');})();">Logout</button>
+  </form>
+  </nav>
+  <br />
+  <div class="container">
+    <center>
+      <!-- shows user information assets -->
+      <div id="userInfo">
+        <div class="card" style="width:400px">
+          <div class="card-body">
+            <h4 class="card-title" id="userName"></h4>
+            <p class="card-text" id ="userDetails">No info</p>
+            <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- shows all borrowed assets -->
+      <div id="borrowedAssets" style="display: none;">
+        <div class="card bg-danger text-white">
+          <div class="card-body">No assets borrowed</div>
+        </div>
+      </div>
+
+      <!-- shows all available assets -->
+      <div id="issueAssets" style="display: none;">
+        <div class="card bg-danger text-white">
+          <div class="card-body">No assets available</div>
+        </div>
+      </div>
+
+      <!-- shows all overdue messages -->
+      <div id="messages" style="display: none;">
+        <div class="card bg-danger text-white">
+          <div class="card-body">No messages to display</div>
+        </div>
+      </div>
+    </center>
+  </div>
+
+</body>
+<script src="script/getAvailableAssets.js"></script>
+<script src="script/getBorrowedAssets.js"></script>
+<!-- <script src="script/overdueMessages.js"></script> -->
+<script lang="javascript">
+	//set user info
+	
+	var userName = document.getElementById("userName");
+	var userDetails = document.getElementById("userDetails");
+	userName.innerHTML = sessionStorage.getItem("name");
+	
+	userDetails.innerHTML = "<b>User ID:</b> " + sessionStorage.getItem("userId");
+	userDetails.innerHTML += "<br/><b>Contact Number:</b> " + sessionStorage.getItem("mobile");
+	userDetails.innerHTML += "<br/><b>Email:</b> " + sessionStorage.getItem("email");
+
+
+	function changeSection(sectionId) {
+    var userInfoDiv = document.getElementById("userInfo");
+    var borrowedAssetsDiv = document.getElementById("borrowedAssets");
+    var issueAssetsDiv = document.getElementById("issueAssets");
+    var messagesDiv = document.getElementById("messages");
+
+    userInfoDiv.style.display = "none";
+    borrowedAssetsDiv.style.display = "none";
+    issueAssetsDiv.style.display = "none";
+    messagesDiv.style.display = "none";
+
+    switch (sectionId) {
+      case 1:
+        userInfoDiv.style.display = "block"
+        break;
+      case 2:
+        borrowedAssetsDiv.style.display = "block";
+        borrowedAssets();
+        break;
+      case 3:
+        issueAssetsDiv.style.display = "block";
+        showAssets();
+        break;
+      case 4:
+        messagesDiv.style.display = "block";
+        break;
+      default:
+        //alert("Msg to developer: Update javascript code base");
+        break;
+    }
+  }
+  </script>
+
+<style>
+@media only screen and (max-width: 768px) {
+  textarea {
+    align-items: center;
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  textarea {
+    align-items: center;
+    width: 60%;
+  }
+}
+html{
+  height: 100%;
+}
+
+
+body {
+  position: relative;
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background-image: url('../images/bg2.jpg');
+  background-position: center;
+
+}
+header{
+  padding: 1px;
+}
+
+.user_home_nav{
+background-color: #800000;
+padding-left:50px;
+}
+.user_home_nav a{
+  color: white;
+}
+.user_home_nav .navbar-brand:hover{
+  font-weight: normal;
+}
+.user_home_nav a:hover{
+  font-weight: bold;
+  color: white;
+}
+.btn-success{
+background: #000;
+border-color: #000;
+}
+
+input {
+  width: 50%;
+  box-shadow: 0px 0px 0px #fff !important;
+  border-color: #000 !important;
+  border-width: 0px 0px 1px 0px !important;
+  border-radius: 0px;
+  color: #000;
+  background-color: transparent;
+}
+
+input:focus {
+  outline: none;
+}
+
+select {
+  width: 50% !important;
+  box-shadow: 0px 0px 0px #fff !important;
+  border-color: #000 !important;
+  border-width: 1px 1px 1px 1px !important;
+  border-radius: 0px;
+  color: #000;
+  background-color: transparent ;
+}
+
+select:focus {
+  outline: none;
+  color: #000;
+}
+
+.form-group {
+  width: 100%;
+  text-align: left;
+  background-color:transparent;
+  padding: 10px;
+}
+
+.form-group:hover {
+  background: linear-gradient(to right,green, #fff);
+  color: #000 !important;
+}
+
+.form-group:hover input {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+.form-group:hover select {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+
+.instructions {
+  left: 10%;
+  padding: 20px;
+  text-align: justify;
+  text-justify: inter-word;
+  background-color: #616161;
+  color: #fff;
+  font-family: 'Muli', sans-serif;
+}
+
+.form {
+  background-color:white;
+  color: #000;
+  text-align: center;
+  padding: 0px !important;
+  width:40%;
+  border-radius: 15px;
+}
+
+header {
+  background-color:#2C9443;
+  color:white;
+  font-family: 'lato', sans-serif;
+  padding: 20px;
+}
+
+input[type=button] {
+  width: 80%!important;
+  box-align: center;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #000 !important;
+  border-width: 1px !important;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  transition: 0.4s ease;
+  color: #000;
+  cursor: default;
+}
+
+input[type=button]:hover {
+  background-color:#2C9443;
+  color:white;
+  border-color:black !important;
+  cursor: pointer;
+}
+
+input[type=button]:active {
+  background-color: #2C9443;
+  border-color: #2C9443 !important;
+}
+
+input[type=button]:disabled {
+  background-color: #2C9443;
+  border-color: #2C9443 !important;
+  cursor: wait;
+}
+
+/* Replacing radio button styliing */
+/* The container */
+.radiocontainer {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radiocontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-style: solid;
+  border-radius: 50%;
+  border-color: #000 !important;
+}
+
+
+/* When the radio button is checked, add a blue background */
+.radiocontainer input:checked~.checkmark {
+  background-color: white;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radiocontainer input:checked~.checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radiocontainer .checkmark:after {
+  top: 0px;
+  left: 0px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #2C9443;
+}
+
+.side-nav {
+  background-color: #343A40;
+  height: 100%;
+}
+
+.container h4{
+  text-align: center;
+}
+.card
+{
+  border: 2px solid black;
+}
+#table1{
+
+  border-radius: 15px;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 1);
+  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 1);
+  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 1);
+  text-align: center;
+  background-color: #fff;
+}
+
+#table1 tbody tr:nth-child(2n)
+{
+	background-color: #e9e6f3;
+	color:#808080;
+}
+#table1 thead{
+  font-family: 'Muli', sans-serif;
+  font-size: 20px;
+  color: #fff;
+  background-color: #2C9443;
+}
+#table1 tr {
+  border-bottom: 2px transparent;
+  font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#table1 tr:hover {
+  background-color:grey;
+  color:white;
+  cursor: pointer;
+}
+#table1 tr:nth-child(2n):hover {
+  background-color:grey;
+  color:white;
+  cursor: pointer;
+}
+
+
+.btn : hover{
+background: #ac8aff !important;
+border-color: #ac8aff !important;
+
+
+}
+</style>
+</html>

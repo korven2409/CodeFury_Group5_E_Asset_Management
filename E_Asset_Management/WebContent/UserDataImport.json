@@ -1,0 +1,18 @@
+{
+    "Users":[
+        {"name":"Pranay",
+        "role":"borrower",
+        "phone":66529278,
+        "email":"pranay@yahoomail.com",
+        "userName":"prany123",
+        "password":"prany@123"
+    },
+    {   "name":"Rohit",
+        "role":"borrower",
+        "phone":78649278,
+        "email":"rohit@gmail.com",
+        "userName":"rohit456",
+        "password":"rohit@456"
+    }  
+    ]
+}

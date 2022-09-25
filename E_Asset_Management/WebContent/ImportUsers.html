@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+          
+      function validate() {
+        ufiles = document.getElementById('userfile').files;
+        console.log(ufiles);
+        var res=true;
+        if (ufiles.length <= 0) {
+          document.getElementById("emsg").innerHTML="file should be uploaded";
+          res=false;
+        }
+        return res;
+      }
+    </script>
+  </head>
+    <body>
+        <p>Select choose file to upload file</p>
+        <form action="UserDataImport.json" onsubmit="return validate()" target="_blank" method="POST">
+            <label>Please upload the file here : </label><input type="file" id="userfile" name="userfile"><br></br>
+            <input type="reset" value="clear uploaded file">
+            <input id="fsubmit" type="submit" >
+            <p id="emsg"></p>
+        </form>
+        
+    </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!-- <script src="script/getUserInfo.js"></script> -->
+    <!-- <script src="script/getBorrowedAssets.js"></script> -->
+    <title>Home Page</title>
+
+    <!-- BOOTSTRAP 4 LIBRARIES -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="assets/CSS/style.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <script lang='javascript' src='script/showAllAssets.js'></script>
+
+
+</head>
+
+<body style="background-color:white">
+    <nav class="admin_home_nav navbar navbar-expand-sm">
+        <a class="navbar-brand" href="index.html">E-Asset Management</a>
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" onclick="changeSection(1)">
+                <a class="nav-link" href="#userInfo">User Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="add_asset.html">Add Asset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="add_asset.html">Add Category</a>
+            </li>
+            <li class="nav-item">
+                <button onclick="location.href='show.html';"  href="show.html">View All Assets</button>
+            </li>
+            <!-- <li class="nav-item">
+                        <a class="nav-link" href="/E-AssetManagement/overdueAsset.html">Over-due Assets</a>
+                    </li>
+                    <li class="nav-item" onclick="changeSection(2)">
+                        <a class="nav-link" href="#reports">Report</a>
+                    </li> -->
+        </ul>
+        <form class="form-inline my-2 my-lg-0 ">
+            <button class="btn btn-success my-2 my-sm-0" type="button" onclick="(function(){sessionStorage.clear();window.location.replace('index.html');})();">Logout</button>
+        </form>
+    </nav>
+    <br />
+    <div class="container">
+        <center>
+            <!-- shows user information assets -->
+            <div id="userInfo">
+                <div class="card" style="width:400px">
+                    <div class="card-body">
+                        <h4 class="card-title" id="userName">No name</h4>
+                        <p class="card-text" id="userDetails">No info</p>
+                        <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- shows all overdue messages -->
+            <div id="showAllAssets" style="display: none;">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">No assets to display</div>
+                </div>
+            </div>
+        </center>
+    </div>
+
+</body>
+<script lang="javascript">
+	var userName = document.getElementById("userName");
+	var userDetails = document.getElementById("userDetails");
+	userName.innerHTML = sessionStorage.getItem("name");
+	userDetails.innerHTML = "<b>User ID:</b> " + sessionStorage.getItem("userId");
+	userDetails.innerHTML += "<br/><b>Contact Number:</b> " + sessionStorage.getItem("mobile");
+	userDetails.innerHTML += "<br/><b>Email:</b> " + sessionStorage.getItem("email");
+    function changeSection(sectionId) {
+        var userInfoDiv = document.getElementById("userInfo");
+        var assetsDiv = document.getElementById("showAllAssets");
+
+        userInfoDiv.style.display = "none";
+        assetsDiv.style.display = "none";
+
+        switch (sectionId) {
+            case 1:
+                userInfoDiv.style.display = "block";
+                break;
+            case 2:
+            	assetsDiv.style.display = "block";
+            	showAllAssets();
+                break;
+            default:
+                //alert("Msg to developer: Update javascript code base");
+                break;
+        }
+    }
+</script>
+
+<style>
+
+.admin_home_nav{
+background-color: #800000;
+padding-left:50px;
+}
+.admin_home_nav a{
+  color: white;
+}
+.admin_home_nav .navbar-brand:hover{
+  font-weight: normal;
+}
+.admin_home_nav a:hover{
+  font-weight: bold;
+  color: white;
+}
+.btn-success{
+background: #000;
+border-color: #000;
+}
+
+
+.btn : hover{
+background: #ac8aff !important;
+border-color: #ac8aff !important;
+
+
+}
+
+</style>
+
+</html>
